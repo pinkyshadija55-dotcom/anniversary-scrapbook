@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 5-Month Anniversary!</title>
+  <style>
+    :root {
+      --bg-color: #fdf6f0;
+      --card-bg: #fffefe;
+      --accent-pink: #ff85a1;
+      --accent-dark: #3a3a3a;
+      --border-color: #d1c7bd;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Casual', cursive, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--accent-dark);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #d64045;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #7d6b5d;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      background: var(--card-bg);
+      border: 2px dashed var(--border-color);
+      border-radius: 15px;
+      padding: 25px;
+      max-width: 500px;
+      width: 100%;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-sizing: border-box;
+    }
+
+    /* --- SECTION 1: INSTAMART CARD --- */
+    .instamart-header {
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .search-bar {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+
+    .search-results-text {
+      font-size: 0.8em;
+      color: #888;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      height: 120px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 8px;
+    }
+
+    .flip-card-front {
+      background-color: #fff;
+    }
+
+    .flip-card-back {
+      background-color: #ffe6eb;
+      color: #d64045;
+      transform: rotateY(180deg);
+      font-weight: bold;
+    }
+
+    .item-title { font-weight: bold; font-size: 0.9em; }
+    .item-price { color: #666; font-size: 0.8em; margin-top: 4px; }
+    .add-btn {
+      margin-top: 6px;
+      border: 1px solid #28a745;
+      color: #28a745;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7em;
+      font-weight: bold;
+    }
+
+    /* --- SECTION 2: WORD SEARCH --- */
+    #ws-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 3px;
+      user-select: none;
+      margin-bottom: 15px;
+    }
+
+    .ws-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fdf1f3;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.85em;
+    }
+
+    .ws-cell.selected {
+      background: var(--accent-pink);
+      color: white;
+    }
+
+    .ws-cell.found {
+      background: #b5e2fa;
+      color: #000;
+    }
+
+    .word-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .word-item {
+      background: #f0f0f0;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.8em;
+    }
+
+    .word-item.found {
+      text-decoration: line-through;
+      background: #c8e6c9;
+    }
+
+    /* --- SECTION 3: JIGSAW PUZZLE --- */
+    #puzzle-container {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 2px;
+      justify-content: center;
+      margin: 20px 0;
+      background: #eee;
+      padding: 2px;
+      border-radius: 8px;
+    }
+
+    .puzzle-piece {
+      width: 100px;
+      height: 100px;
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff85a1;stop-opacity:1" /><stop offset="100%" style="stop-color:%23d64045;stop-opacity:1" /></linearGradient></defs><rect width="300" height="300" fill="url(%23grad1)"/><circle cx="150" cy="150" r="80" fill="white" opacity="0.3"/><text x="150" y="150" font-size="40" fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="bold">❤️</text></svg>');
+      background-size: 300px 300px;
+      cursor: grab;
+      border-radius: 4px;
+    }
+
+    .puzzle-piece:active {
+      cursor: grabbing;
+    }
+
+    #win-message {
+      display: none;
+      text-align: center;
+      color: #d64045;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 15px;
+      animation: popIn 0.6s ease-out;
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(400px) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      animation: confetti-fall 3s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Happy 5-Month Anniversary! ❤️</h1>
+  <p class="subtitle">A little interactive scrapbook created with love</p>
+
+  <!-- SECTION 1: INSTAMART CARD -->
+  <div class="section">
+    <div class="instamart-header">
+      <div class="search-bar">🔍 Best partner ever</div>
+      <div class="search-results-text">Showing results for "Best Partner Ever"</div>
+    </div>
+    <div class="grid-container">
+      
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="item-title">🍬 Kismi Toffees</div>
+            <div class="item-price">₹50</div>
+            <div class="add-btn">ADD</div>
+          </div>
+          <div class="flip-card-back">
+            5 problems, 1 solution! [Me]
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="item-title">✨ Hydrating Serum</div>
+            <div class="item-price">₹450</div>
+            <div class="add-btn">ADD</div>
+          </div>
+          <div class="flip-card-back">
+            You bring the glow into my life!
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="item-title">🧴 Fevicol Glue</div>
+            <div class="item-price">₹96</div>
+            <div class="add-btn">ADD</div>
+          </div>
+          <div class="flip-card-back">
+            Stuck with you forever!
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <div class="item-title">🌾 Aashirvaad Atta</div>
+            <div class="item-price">₹100</div>
+            <div class="add-btn">ADD</div>
+          </div>
+          <div class="flip-card-back">
+            Blessed to have you!
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2: WORD SEARCH -->
+  <div class="section">
+    <h2>Find Our Hidden Words 🔍</h2>
+    <p style="text-align:center; font-size: 0.85em; color: #666;">Click letters to find phrases!</p>
+    
+    <div id="ws-grid"></div>
+
+    <div class="word-list" id="word-list">
+      <div class="word-item" id="w-FOUNDYOU">SOGLADIFOUNDYOU</div>
+      <div class="word-item" id="w-MYPERSON">MYFAVORITEPERSON</div>
+      <div class="word-item" id="w-MYHOME">YOUAREMYHOME</div>
+      <div class="word-item" id="w-FOREVER">FOREVER</div>
+      <div class="word-item" id="w-ALWAYS">ALWAYS</div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: JIGSAW PUZZLE -->
+  <div class="section">
+    <h2>Piece Us Together 🧩</h2>
+    <p style="text-align:center; font-size: 0.85em; color: #666;">Drag and drop the pieces to solve our photo puzzle!</p>
+    
+    <div id="puzzle-container"></div>
+    <div id="win-message">You complete me! Happy 5 Months! 💕</div>
+  </div>
+
+  <script>
+    /* --- WORD SEARCH SCRIPT --- */
+    const gridData = [
+      ['S','O','G','L','A','D','I','F','O','U'],
+      ['N','D','Y','O','U','A','B','C','D','E'],
+      ['M','Y','F','A','V','O','R','I','T','E'],
+      ['P','E','R','S','O','N','F','G','H','I'],
+      ['Y','O','U','A','R','E','M','Y','H','O'],
+      ['M','E','J','K','L','M','N','O','P','Q'],
+      ['F','O','R','E','V','E','R','R','S','T'],
+      ['A','L','W','A','Y','S','U','V','W','X'],
+      ['Y','Z','A','B','C','D','E','F','G','H'],
+      ['I','J','K','L','M','N','O','P','Q','R']
+    ];
+
+    const wordsToFind = {
+      "SOGLADIFOUNDYOU": [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[1,0],[1,1],[1,2],[1,3],[1,4]],
+      "MYFAVORITEPERSON": [[2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[2,7],[2,8],[2,9],[3,0],[3,1],[3,2],[3,3],[3,4],[3,5]],
+      "YOUAREMYHOME": [[4,0],[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],[4,7],[4,8],[4,9],[5,0],[5,1]],
+      "FOREVER": [[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6]],
+      "ALWAYS": [[7,0],[7,1],[7,2],[7,3],[7,4],[7,5]]
+    };
+
+    let selectedCells = [];
+    const wsGridElem = document.getElementById('ws-grid');
+
+    // Build Word Search Grid
+    for(let r=0; r<10; r++) {
+      for(let c=0; c<10; c++) {
+        const cell = document.createElement('div');
+        cell.className = 'ws-cell';
+        cell.textContent = gridData[r][c];
+        cell.dataset.row = r;
+        cell.dataset.col = c;
+        cell.addEventListener('click', () => toggleCell(cell, r, c));
+        wsGridElem.appendChild(cell);
+      }
+    }
+
+    function toggleCell(cell, r, c) {
+      cell.classList.toggle('selected');
+      checkWords();
+    }
+
+    function checkWords() {
+      const selectedList = Array.from(document.querySelectorAll('.ws-cell.selected')).map(c => [parseInt(c.dataset.row), parseInt(c.dataset.col)]);
+      
+      for(let word in wordsToFind) {
+        let coords = wordsToFind[word];
+        let allFound = coords.every(coord => selectedList.some(s => s[0] === coord[0] && s[1] === coord[1]));
+        if(allFound) {
+          coords.forEach(coord => {
+            let el = document.querySelector(`.ws-cell[data-row='${coord[0]}'][data-col='${coord[1]}']`);
+            if(el) {
+              el.classList.remove('selected');
+              el.classList.add('found');
+            }
+          });
+          const label = document.getElementById(`w-${word.replace('SOGLADIFOUNDYOU','FOUNDYOU').replace('MYFAVORITEPERSON','MYPERSON').replace('YOUAREMYHOME','MYHOME')}`);
+          if(label) label.classList.add('found');
+        }
+      }
+    }
+
+    /* --- CONFETTI FUNCTION --- */
+    function createConfetti() {
+      const confettiCount = 50;
+      for(let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.innerHTML = ['🎉', '💕', '❤️', '✨', '🎊'][Math.floor(Math.random() * 5)];
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.top = '-50px';
+        confetti.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        confetti.style.opacity = Math.random() * 0.7 + 0.3;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+
+    /* --- JIGSAW PUZZLE SCRIPT --- */
+    const puzzleContainer = document.getElementById('puzzle-container');
+    let pieces = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    let currentOrder = [...pieces].sort(() => Math.random() - 0.5);
+
+    function createPuzzle() {
+      puzzleContainer.innerHTML = '';
+      currentOrder.forEach((pieceIdx, posIdx) => {
+        const piece = document.createElement('div');
+        piece.className = 'puzzle-piece';
+        piece.draggable = true;
+        
+        let row = Math.floor(pieceIdx / 3);
+        let col = pieceIdx % 3;
+        piece.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+        piece.dataset.index = posIdx;
+
+        piece.addEventListener('dragstart', dragStart);
+        piece.addEventListener('dragover', dragOver);
+        piece.addEventListener('drop', drop);
+
+        puzzleContainer.appendChild(piece);
+      });
+    }
+
+    let draggedIdx = null;
+
+    function dragStart(e) {
+      draggedIdx = e.target.dataset.index;
+    }
+
+    function dragOver(e) {
+      e.preventDefault();
+    }
+
+    function drop(e) {
+      let targetIdx = e.target.dataset.index;
+      let temp = currentOrder[draggedIdx];
+      currentOrder[draggedIdx] = currentOrder[targetIdx];
+      currentOrder[targetIdx] = temp;
+      
+      createPuzzle();
+      checkPuzzleWin();
+    }
+
+    function checkPuzzleWin() {
+      let isSolved = currentOrder.every((val, idx) => val === idx);
+      if(isSolved) {
+        document.getElementById('win-message').style.display = 'block';
+        createConfetti();
+      }
+    }
+
+    createPuzzle();
+  </script>
+</body>
+</html>
