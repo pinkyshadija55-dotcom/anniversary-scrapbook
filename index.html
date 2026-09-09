@@ -238,6 +238,7 @@
       margin: 5px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       transition: transform 0.2s;
+      border: 2px solid #ff85a1;
     }
 
     .puzzle-piece:hover {
@@ -502,14 +503,14 @@
     const puzzleContainer = document.getElementById('puzzle-container');
     const piecesList = document.getElementById('pieces-list');
     
-    // Image URL - using a placeholder that will be replaced with actual image
-    const imageUrl = 'photo.jpg';
+    // Use the uploaded image
+    const imageUrl = 'IMG_1267.jpeg';
     
     let pieces = [];
     let placedPieces = {};
     let draggedPiece = null;
 
-    // Create 9 puzzle pieces with zigzag borders
+    // Create 9 puzzle pieces
     function initPuzzle() {
       for(let i = 0; i < 9; i++) {
         const piece = {
@@ -541,7 +542,7 @@
         pieceElem.draggable = true;
         pieceElem.dataset.id = piece.id;
         
-        // Set background position for this piece
+        // Set background position for this piece (240x240 image)
         const col = piece.col * 80;
         const row = piece.row * 80;
         pieceElem.style.backgroundImage = `url('${imageUrl}')`;
